@@ -730,5 +730,188 @@ int main(){
 + 统计整个数组在内存中的长度 ```sizeof(arr)```
 + 获取数组在内存中的首地址 ```cout<<arr<<endl;```
 
- 
+ ```cpp
+ int main(){
+   //内存长度
+   int arr[10] = {1,2,3,4,5,6,7,8,9,10};
+   cout<<sizeof(arr)<<endl;
+   cout<<arr<<endl;  
+   //数组中元素的个数
+   cout<<:数组中元素的个数:<<sizeof(arr)/sizeof(arr[0])<<endl;
+   //首地址
+   cout<<"数组首地址为"<<arr<<endl;
+   cout<<"数组第一个元素的地址为"<< (long long)&arr[0]<<endl; //十进制 long long &arr[0]
+   //数组名是常量，不可以进行复赋值操作
+   arr = 100;
+ }
+ ```
+
+
+
+案例：五只小猪称体重
+
+```int arr[5]={300,350,200,400,250}```
+
+找出并打印最重的小猪体重
+
+```cpp
+int main(){
+  int arr[5] = {300,350,200,400,250};
+  int max = 0;
+  for (int i = 0;i<5;i++){
+    if (arr[i] > max){
+      max = arr[i];//update our maximum
+    }
+  }
+  cout<<max<<endl;
+}
+```
+
+案例：数组逆置
+
+如 {1,3,2,5,4}, 逆置：{4,5,2,3,1}
+
+```int star = 0``` 起始元素下标
+
+```int end = sizeof (arr)/sizeof(arr[0])-1``` 末尾元素下标
+
+ ```cpp
+ int main(){
+   //创建数组
+   int arr[5] = {1,3,2,5,4};
+   for(int i = 0;i<5;i++){
+     cout<<arr[i]<<endl;    
+   }
+   //逆置
+   while(start < end){
+     int start = 0;
+     int end = sizeof(arr)/sizeof(arr[0])-1;
+     int temp = arr[start];
+     arr[start] = arr[end];
+     arr[end] = temp;
+     start ++;
+     end --;
+     
+   }
+   
+   //ouput
+   for(int i = 0;i<5;i++){
+     cout<<arr[i]<<endl;    
+   }  
+ }
+ ```
+
+### 冒泡排序
+
+作用：组内数据排序
+
+1. 比较相邻的元素，如果第一个比第二个大，交换
+2. 对每一对相邻元素做同样的工作，执行完毕后，找到一个最大值
+3. 重复以上步骤，每次比较次数-1，直到不需要比较
+
+排序总轮数 = 元素个数-1
+
+每轮对比次数 = 元素个数 - 排序轮数-1；
+
+```cpp
+#include <iostream>
+int main() {
+    // insert code here...
+    int arr[9] = {4,2,8,0,5,7,1,3,9};
+    for (int i = 0;i<9-1;i++){
+        for (int j = 0;j < 9-i-1;j++){
+            if (arr[j] > arr[j+1]){
+                int temp = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = temp;
+            }
+        }
+    }
+    
+    for (int k = 0; k < 9;k++){
+        
+        std::cout<<arr[k]<<std::endl;
+        
+    }
+}
+```
+
+## 二维数组
+
+定义方式：
+
+1. ```数据类型 数组名[行数][列数];```
+2. ```数据类型 数组名[行数][列数] = {{数据1，数据2},{数据3，数据4}};```
+3. ```数据类型 数组名[行数][列数] = {数据1，数据2，数据3，数据4};```
+4. ```数据类型 数组名 [][列数] = {数据1，数据2，数据3，数据4}；```
+
+第二种更加直观，提高代码的可读性
+
+```cpp
+int main(){
+  //1.
+  int arr[2][3];
+  arr[0][0] = 1;
+  arr[0][1] = 2;
+  arr[0][2] = 3;
+  arr[1][0] = 4;
+  arr[1][1] = 5;
+  arr[1][2] = 6;
+  for (int i = 0; i <2;i++){
+    for (int j = 0;j < 3;j++){
+      cout<<arr[i][j]<<endl;
+    }
+  }
+  //2.
+  int arr[2][3] = 
+  {
+    {1,2,3},
+    {4,5,6}
+  };
+  for (int i = 0;i < 2;i++){
+    for (int j = 0;j<3;j++){
+      cout<<arr[i][j]<<"";
+      
+    }
+    cout<<endl;
+  }
+  //3.
+  int arr[2][3] = {1,2,3,4,5,6};
+  for (int i = 0;i < 2;i++){
+    for (int j = 0;j<3;j++){
+      cout<<arr[i][j]<<"";
+      
+    }
+    cout<<endl;
+  }
+  //4.
+  int arr[][3] = {1,2,3,4,5,6};  
+}
+```
+
+#### 二维数组组名
+
++ 查看二维数组所占内存空间
++ 获取二维数组首地址
+
+```cpp
+int main(){
+  //1. 可以查看占用内存空间大小
+  int arr[2][3] = 
+  {
+    {1,2,3},
+    {4,5,6}
+  };
+  cout<<"二维数组占用空间："<<sizeof(arr)<,endl;
+  cout<<"二维数组第一行占用的内存空间"<<sizeof(arr[0])<<endl;
+  cout<<"二维数组第一个元素占用的内存为："<<sizeof(arr[0][0])<<endl;
+  cout<<"二维数组的行数为："<<sizeof(arr)/sizeof(arr[0])<<endl;
+  cout<<"二维数组的列数为"<<sizeof(arr[0])/sizeof(arr[0][0])<<endl;
+  //2. 查看二维数组的首地址
+  cout<<"二维数组的首地址："<<(long long)arr<<endl; // (long long)转十进制
+  cout<<"二维数组第一行首地址："<<(long long) arr[0]<<endl;
+}
+```
+
+
 
