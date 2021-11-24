@@ -909,9 +909,286 @@ int main(){
   cout<<"二维数组的列数为"<<sizeof(arr[0])/sizeof(arr[0][0])<<endl;
   //2. 查看二维数组的首地址
   cout<<"二维数组的首地址："<<(long long)arr<<endl; // (long long)转十进制
-  cout<<"二维数组第一行首地址："<<(long long) arr[0]<<endl;
+  cout<<"二维数组第一行首地址："<<(long long)arr[0]<<endl;
+  cout<<"二维数组第二行首地址:"<<(long long)arr[1]<<endl;
+  
+  cout<<"二维数组第一个元素首地址："<<(int)&arr[0][0]<<endl;
+  cout<<"二维数组第二个元素首地址："<<(int)&arr[0][1]<<endl; 
+}
+```
+
+## 函数
+
+作用：将一段代码封装起来
+
+定义：
+
+1. 返回值类型
+2. 函数名
+3. 参数表列
+4. 函数体语句
+5. return 表达式
+
+```cpp
+int main(){
+  int add(int num1, int num2){
+    // num1 num2 叫形参，真实数据叫实参
+    int sum = num1 + num2;
+    return sum;
+  }
+}
+```
+
+## 函数调用
+
+功能：使用定义好的函数
+
+语法：```函数名```
+
+```cpp
+#include <iostream>
+int add(int num1, int num2){
+    int sum = num1 + num2;
+    return sum;
+}
+
+
+int main() {
+    // insert code here...
+    int a = 2;
+    int b = 2;
+    int c = add(a,b);
+    std::cout<<c<<std::endl;
+}
+
+```
+
+## 值传递
+
++ 值传递：函数调用时将实参传入给形参
++ 值传递时，如果形参发生变化，并不会影响实参
+
+```cpp
+//定义一个函数
+//如果函数不需要返回值，声明的时候可以写一个void
+void swap(int num1, int num2){
+  int temp = 0;
+  num1 = num2;
+  num2 = temp;
+  return;//返回值不需要的时候可以不写return
+  cout<<num1<<endl;
+  cout<<num2<<endl;
+}
+int main(){
+  int a = 10;
+  int b = 20;
+  swap(a,b);
+}
+```
+
+## 函数常见样式
+
+常见样式有四种：
+
+1. 无参无返
+2. 有参无返
+3. 无参有返
+4. 有参有返
+
+```cpp
+//1. 无参无返
+void test01(){
+  cout<<"this is test01"<<endl;
+}
+//2. 有参无返
+void test02(a){
+  cout<<"this is test02"<<a<endl;
+}
+//3. 无参有返
+int test03(){
+  cout<<"this is test03"<<endl;
+  return 1000
+  
+}
+//4. 有参有返
+int test04(){
+  cout<<"this is test 04"<<a<<endl;
+  return 1000;
+}
+//调用
+int main(){
+  //1. 无参无返
+  test01();
+  //2. 有参无返
+  test02(100);
+  //3. 无参有返
+  int num1 = test03();
+  cout<<"num1"<<num1<<endl;
+  //4. 有参有返
+  int num2 = test04(10000);
+  cout<<"num2="<<num2<endl;
+}
+```
+
+## 函数声明
+
+作用L：告诉编译器函数名称如何调用，函数的实际主题可以单独定义
+
++ 函数的声明可以多次定义，但是函数的定义只能有一次
+
+```cpp
+int max(int a, int b){
+  return a>b?a:b;
+}
+int main(){
+  int a = 10;
+  int b = 20;
+  cout<<max(a,b)<<endl;
+}
+
+//提前告诉编译器函数的存在，可以利用函数声明
+//声明
+int max(int a, int b);
+//调用
+int main(){  
+  int a = 10;  
+  int b = 20;  
+  cout<<max(a,b)<<endl;
+}
+//定义
+int max(int a, int b){  
+  return a>b?a:b;
+}
+
+```
+
+## 函数的份文件编写
+
+作用：让代码结构更加清晰
+
+函数分文件写的一般有四个步骤：
+
+1. 创建后缀名为.h的头文件
+2. 创建后缀名为.cpp的头文件
+3. 在头文件中写函数的声明
+4. 在原文件中写函数的定义
+
+ ```cpp
+ #include <iostream>
+ using namespace std;
+ #include "swap.h"
+ //函数分文件编写
+ //实现两个数字进行交换的函数
+ 
+ //函数的声明
+ void swap(int a, int b);
+ void swap(int a, int b){
+   int temp = a;
+   a = b;
+   b = temp;
+   cout<<a<<endl;
+   cout<<b<<endl;
+ }
+ int main(){
+   int a = 10;
+   int b = 20;
+   swap(a,b);
+ }
+ 
+ //1. 创建.h后缀名的头文件
+ //2. 创建.cpp后缀名的源文件
+ //3. 在头文件中写函数的声明
+ //4. 源文件中写函数的定义
+ ```
+
+## 指针
+
+作用：可以通过指针间接访问内存
+
++ 内存编号从0开始记录的，一般用十六进制数字表示
++ 可以利用指针变量保存地址
++ 指针就是一个地址
+
+定义 ```数据类型 * 变量名```
+
+```cpp
+int main(){
+  //1. 定义一个指针
+  int a = 10;
+  //指针定义的语法: 数据类型 * 指针变量名;
+  int * p;
+  //让指针记录变量a的地址（建立关系）
+  p = &a; //&取地址符号
+  cout<<"a的地址为："<<&a<<endl;
+  cout<<"指针p为："<<p<<endl;
+  //2. 如何使用指针
+  //可以通过解引用的方式来找到指针指向的内存
+  //指针前加 * 代表解引用，找到指针指向的内存中的数据
+  *p = 1000;
+  cout<<"a="<<a<endl;
+  cout<<"*p="<<*p<<endl;
+}
+```
+
+### 指针占用内存空间
+
+提问：指针也是种数据类型，这种数据类型占用多少内存空间呢
+
++ 32位操作系统下， 指针是占4个字节空间大小，不管是什么类型
++ 64位操作系统下，指针是占8个字节空间大小，不管是什么类型
+
+```cpp
+int main(){
+  //指针所占内存空间
+  int a = 10;
+  //int *p;
+  //p = &a;
+  int *p=&a;
+  cout<<"sizeof int * ="<<sizeof(int *)<<endl;
 }
 ```
 
 
 
+### 空指针和野指针
+
+空指针：指针变量指向内存中编号为0的空间
+
+用途：初始化指针变量
+
+注意：空指针指向的内存是不可以访问的
+
+```cpp
+int main(){
+  //1.空指针用于给指针变量进行初始化
+  int * p = NULL;
+  
+  //2.空指针式不可以进行访问的
+  //0-255之间的内存编号是系统占用的，因此不可以访问
+  cout<<*p<<endl; //报错
+  
+}
+```
+
+  
+
+野指针：指针变量指向非法的内存空间
+
+```cpp
+int main(){
+  int *p = (int *)0x1100;
+  cout<<*p<<endl;
+}
+```
+
+总结：空指针和野指针都不是我们申请的空间，因此不要访问
+
+## const修饰指针
+
+三种情况：
+
+1. const修饰指针--常量指针
+2. const修饰常量 --指针常量
+3. const即修饰指针，又修饰常量
+
+ 
